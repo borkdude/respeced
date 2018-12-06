@@ -4,7 +4,7 @@
 
 ## Rationale
 
-This library provides various tools around `clojure.spec.test.alpha`.
+This library provides various tools around `clojure.spec.test.alpha`. It supports Clojure, ClojureScript and self-hosted ClojureScript.
 
 ## API
 
