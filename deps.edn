@@ -1,0 +1,31 @@
+{:paths ["resources" "src"]
+ :deps {}
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {org.clojure/clojure {:mvn/version "1.10.0-beta6"}
+                      org.clojure/clojurescript {:mvn/version "1.10.439"}
+                      mfikes/workarounds-1.10.439 {:git/url "https://github.com/mfikes/workarounds-1.10.439"
+                                                   :sha "a559201602fc6a21701479b83086d76bd5ed09eb"}
+                      org.clojure/test.check {:mvn/version "RELEASE"}
+                      speculative {:mvn/version "0.0.3-SNAPSHOT"}}}
+  :clj-tests ;; we use a script, because then we can call shutdown-agents, which
+  ;; brings down the process faster after running generative tests
+  {:main-opts ["-m" "restecp.test-runner"]}
+  :clj-test-runner
+  {:extra-deps {com.cognitect/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner"
+                 :sha "76568540e7f40268ad2b646110f237a60295fa3c"}}
+   :main-opts ["-m" "cognitect.test-runner"
+               "-d" "test"]}
+  :cljs-tests
+  {:main-opts ["-m" "cljs.main" "-re" "node" "-m" "restecp.test-runner"]}
+  :compile-node-tests
+  {:main-opts ["-m" "cljs.main" "-t" "node" "-c" "restecp.test-runner"]}
+  ;; we use the test runner because vanilla cljs.main + node doesn't exit
+  ;; properly
+  :cljs-test-runner
+  {:extra-deps {olical/cljs-test-runner {:mvn/version "3.1.0"}}
+   :main-opts ["-m" "cljs-test-runner.main"]}
+  :plk-tests
+  {:main-opts ["-m" "restecp.test-runner"]}
+  }}
