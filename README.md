@@ -125,6 +125,10 @@ true
 user=>
 ```
 
+## Origin
+
+This library started as a namespace in [speculative](https://github.com/slipset/speculative/).
+
 ## Tests
 
 ### Clojure
