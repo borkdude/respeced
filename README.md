@@ -6,10 +6,68 @@
 
 This library provides various tools around `clojure.spec.test.alpha`.
 
+## API
+
+### `with-instrumentation`
+Instrument a function in the scope of a body. restores instrumentation state (i.e. unstruments after the call when the function was not instrumented before the call).
+
+Example call:
+
+```
+(with-instrumentation `foo (foo 1 2 3))
+```
+
+### `with-unstrumentation`
+Unstrument a function in the scope of a body. restores instrumentation state (i.e. re-instruments after the call when the function was instrumented before the call).
+
+Example call:
+
+```
+(with-unstrumentation `foo (foo 1 2 3))
+```
+
+### `throws`
+Asserts with `clojure.test/is` that body throws spec error for symbol.
+
+Example call:
+
+```
+(deftest my-spec-works
+  (with-instrumentation `foo
+    (throws `foo (foo :some-wrong-argument))))
+```
+
+### `check-call`
+Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn` specs. Returns return value of call if succeeded, else throws.
+
+Example call:
+
+```
+(check-call `foo [1 2 3])
+```
+
+### `check`
+Like `clojure.spec.test.alpha/check` with third arg for passing `clojure.test.check` options.
+
+Example call:
+
+```
+(check `foo {} {:num-tests 10})
+```
+
+### `successful?`
+Returns true if all `spec.test.alpha/check` tests have `pass?` `true`.
+
+Example call:
+
+```
+(successful? (check `foo {} {:num-tests 10}))
+```
+
 ## Example usage
 
 ``` clojure
-$ clj -Sdeps '{:deps {org.clojure/test.check {:mvn/version "RELEASE"}}}'
+$ clj -Sdeps '{:deps {respeced {:mvn/version "0.0.1-SNAPSHOT"}}}'
 Clojure 1.10.0-beta5
 
 user=> (require '[respeced.test :as test])
