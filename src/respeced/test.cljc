@@ -1,4 +1,4 @@
-(ns restecp.test
+(ns respeced.test
   "Macros and function utils for clojure.spec.test.alpha and
   clojure.test. Alpha, subject to change."
   (:require
@@ -7,7 +7,7 @@
    [clojure.test :as t :refer [deftest is testing]])
   #?(:cljs
      (:require-macros
-      [restecp.test :refer [with-instrumentation
+      [respeced.test :refer [with-instrumentation
                             with-unstrumentation
                             throws
                             check-call
@@ -92,7 +92,7 @@
             e#))))
 
 (defn do-check-call
-  "Private. From clojure.spec.test.alpha, adapted for restecp"
+  "Private. From clojure.spec.test.alpha, adapted for respeced"
   [f specs args]
   (clojure.spec.test.alpha/with-instrument-disabled
     (let [cargs (when (:args specs) (s/conform (:args specs) args))]
@@ -127,25 +127,6 @@
 (defn planck-env? []
   #?(:cljs (exists? js/PLANCK_EXIT_WITH_VALUE)
      :clj false))
-
-;; #?(:clj
-;;    (defn run-tests*
-;;      "Private. run-tests from clojure.test with fix for CLJ-2443"
-;;      ([] (t/run-tests *ns*))
-;;      ([& namespaces]
-;;       (let [summary (assoc (apply merge-with + (mapv t/test-ns namespaces))
-;;                            :type :summary)]
-;;         (t/do-report summary)
-;;         summary))))
-
-;; (deftime
-
-;;   (defmacro run-tests
-;;     ([] (t/run-tests))
-;;     ([& namespaces]
-;;      `(?
-;;        :clj (run-tests* ~@namespaces)
-;;        :cljs (cljs.test/run-tests ~@namespaces)))))
 
 ;;;; Public API
 

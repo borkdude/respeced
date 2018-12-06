@@ -1,9 +1,9 @@
-(ns restecp.test-runner
+(ns respeced.test-runner
   (:require
    [clojure.test :as t :refer [run-tests]]
    [clojure.test]
-   [restecp.test :refer [planck-env?]]
-   [restecp.test-test]))
+   [respeced.test :refer [planck-env?]]
+   [respeced.test-test]))
 
 (defn exit
   "Exit with the given status."
@@ -47,6 +47,6 @@
        (exit 0))))
 
 (defn -main [& args]
-  (run-tests 'restecp.test-test))
+  (run-tests 'respeced.test-test))
 
 #?(:cljs (set! *main-cli-fn* -main))

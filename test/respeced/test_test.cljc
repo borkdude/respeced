@@ -1,9 +1,9 @@
-(ns restecp.test-test
+(ns respeced.test-test
   (:require
    [clojure.spec.alpha :as s]
    [clojure.spec.test.alpha :as stest]
    [clojure.test :as t :refer [deftest is testing]]
-   [restecp.test :refer [with-instrumentation
+   [respeced.test :refer [with-instrumentation
                          with-unstrumentation
                          throws
                          check-call

@@ -10,7 +10,7 @@
                       speculative {:mvn/version "0.0.3-SNAPSHOT"}}}
   :clj-tests ;; we use a script, because then we can call shutdown-agents, which
   ;; brings down the process faster after running generative tests
-  {:main-opts ["-m" "restecp.test-runner"]}
+  {:main-opts ["-m" "respeced.test-runner"]}
   :clj-test-runner
   {:extra-deps {com.cognitect/test-runner
                 {:git/url "https://github.com/cognitect-labs/test-runner"
@@ -18,14 +18,14 @@
    :main-opts ["-m" "cognitect.test-runner"
                "-d" "test"]}
   :cljs-tests
-  {:main-opts ["-m" "cljs.main" "-re" "node" "-m" "restecp.test-runner"]}
+  {:main-opts ["-m" "cljs.main" "-re" "node" "-m" "respeced.test-runner"]}
   :compile-node-tests
-  {:main-opts ["-m" "cljs.main" "-t" "node" "-c" "restecp.test-runner"]}
+  {:main-opts ["-m" "cljs.main" "-t" "node" "-c" "respeced.test-runner"]}
   ;; we use the test runner because vanilla cljs.main + node doesn't exit
   ;; properly
   :cljs-test-runner
   {:extra-deps {olical/cljs-test-runner {:mvn/version "3.1.0"}}
    :main-opts ["-m" "cljs-test-runner.main"]}
   :plk-tests
-  {:main-opts ["-m" "restecp.test-runner"]}
+  {:main-opts ["-m" "respeced.test-runner"]}
   }}

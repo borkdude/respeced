@@ -1,11 +1,10 @@
-# restecp
-[![CircleCI](https://circleci.com/gh/borkdude/restecp/tree/master.svg?style=svg)](https://circleci.com/gh/borkdude/restecp/tree/master)
-[![Clojars Project](https://img.shields.io/clojars/v/restecp.svg)](https://clojars.org/restecp)
+# respeced
+[![CircleCI](https://circleci.com/gh/borkdude/respeced/tree/master.svg?style=svg)](https://circleci.com/gh/borkdude/respeced/tree/master)
+[![Clojars Project](https://img.shields.io/clojars/v/respeced.svg)](https://clojars.org/respeced)
 
 ## Rationale
 
-This library provides various tools around `clojure.spec.test.alpha`. This
-namespace is alpha, so use with caution. More info [here](doc/test.md).
+This library provides various tools around `clojure.spec.test.alpha`.
 
 ## Example usage
 
@@ -13,7 +12,7 @@ namespace is alpha, so use with caution. More info [here](doc/test.md).
 $ clj -Sdeps '{:deps {org.clojure/test.check {:mvn/version "RELEASE"}}}'
 Clojure 1.10.0-beta5
 
-user=> (require '[restecp.test :as test])
+user=> (require '[respeced.test :as test])
 nil
 
 user=> (require '[clojure.spec.alpha :as s])
@@ -30,7 +29,7 @@ user=> (defn foo [n] "ret")
 ;; test/check-call helps with checking `:ret` and `:fn` specs:
 
 user=> (test/check-call `foo [1])
-Execution error - invalid arguments to restecp.test$do_check_call/invokeStatic at (test.cljc:138).
+Execution error - invalid arguments to respeced.test$do_check_call/invokeStatic at (test.cljc:138).
 "ret" - failed: number? at: [:ret]
 
 ;; change the spec:
