@@ -2,7 +2,7 @@
 [![CircleCI](https://circleci.com/gh/borkdude/respeced/tree/master.svg?style=svg)](https://circleci.com/gh/borkdude/respeced/tree/master)
 [![Clojars Project](https://img.shields.io/clojars/v/respeced.svg)](https://clojars.org/respeced)
 
-## Rationale
+## What is respeced?
 
 This library provides various functions and macros around `clojure.spec.test.alpha`. This library fully supports Clojure, ClojureScript and self-hosted ClojureScript. Typically this library is used in testing.
 
