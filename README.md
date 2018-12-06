@@ -9,7 +9,7 @@ This library provides various functions and macros around `clojure.spec.test.alp
 ## API
 
 ### `with-instrumentation`
-Instrument a function in the scope of a body. restores instrumentation state (i.e. unstruments after the call when the function was not instrumented before the call).
+Instrument a function in the scope of a body. Restores instrumentation state, i.e. unstruments after the call only when the function was not instrumented before the call).
 
 Example call:
 
@@ -18,7 +18,7 @@ Example call:
 ```
 
 ### `with-unstrumentation`
-Unstrument a function in the scope of a body. restores instrumentation state (i.e. re-instruments after the call when the function was instrumented before the call).
+Unstrument a function in the scope of a body. Restores instrumentation state, i.e. only re-instruments after the call when the function was instrumented before the call.
 
 Example call:
 
