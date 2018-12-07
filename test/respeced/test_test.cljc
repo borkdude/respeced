@@ -4,12 +4,12 @@
    [clojure.spec.test.alpha :as stest]
    [clojure.test :as t :refer [deftest is testing]]
    [respeced.test :refer [with-instrumentation
-                         with-unstrumentation
-                         throws
-                         check-call
-                         check
-                         successful?
-                         test-check-kw]]
+                          with-unstrumentation
+                          caught?
+                          check-call
+                          check
+                          successful?
+                          test-check-kw]]
    ;; included for self-hosted cljs
    [workarounds-1-10-439.core]))
 
@@ -40,14 +40,14 @@
 
   (testing "manual instrument"
     (stest/instrument `foo)
-    (throws `foo (foo "not a number")))
+    (is (caught? `foo (foo "not a number"))))
 
   (testing "no instrumentation"
     (with-unstrumentation `foo
       (is (= "ret" (foo "not a number")))))
 
   (testing "manual instrumentation is restored"
-    (throws `foo (foo "not a number")))
+    (is (caught? `foo (foo "not a number"))))
 
   (testing "undo manual instrumentation"
     (stest/unstrument `foo)
@@ -55,7 +55,7 @@
 
   (testing "with instrumentation"
     (with-instrumentation `foo
-      (throws `foo (foo "not a number"))))
+      (is (caught? `foo (foo "not a number")))))
 
   (testing "no instrumentation"
     (is (= "ret" (foo "not a number")))))

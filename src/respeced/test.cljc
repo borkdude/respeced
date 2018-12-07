@@ -3,15 +3,14 @@
   clojure.test. Alpha, subject to change."
   (:require
    [clojure.spec.alpha :as s]
-   [clojure.spec.test.alpha :as stest]
-   [clojure.test :as t :refer [deftest is testing]])
+   [clojure.spec.test.alpha :as stest])
   #?(:cljs
      (:require-macros
       [respeced.test :refer [with-instrumentation
-                            with-unstrumentation
-                            throws
-                            check-call
-                            check]])))
+                             with-unstrumentation
+                             caught?
+                             check-call
+                             check]])))
 
 ;;;; Implementation
 
@@ -164,9 +163,9 @@
          (throw ret#)
          ret#)))
 
-  (defmacro throws
-    "Asserts that body throws spec error concerning s/fdef for symbol."
-    [symbol & body]
+  (defmacro caught?
+    "Returns true if body throws spec error for instrumented fn"
+    [sym & body]
     `(let [msg#
            (? :clj (try
                      ~@body
@@ -176,10 +175,10 @@
                            ~@body
                            (catch js/Error e#
                              (.-message e#))))]
-       (clojure.test/is (clojure.string/starts-with?
-                         msg#
-                         (str "Call to " (resolve ~symbol)
-                              " did not conform to spec")))))
+       (clojure.string/starts-with?
+        msg#
+        (str "Call to " (resolve ~sym)
+             " did not conform to spec"))))
 
   (defmacro check-call
     "Applies args to function resolved by symbol. Checks :args, :ret
