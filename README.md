@@ -4,12 +4,77 @@
 
 ## Rationale
 
-This library provides various tools around `clojure.spec.test.alpha`.
+This library helps verify that [spec](https://clojure.org/about/spec) `fdefs` do what they are supposed to do:
+
+- throw errors on wrong input (when instrumented) and output (when used in generative testing) of functions
+- not throw on correct usage
+
+Typically respeced is used in testing.
+
+Respeced fully supports Clojure, ClojureScript and self-hosted ClojureScript.
+
+## API
+
+### `with-instrumentation`
+Instrument a function in the scope of a body. Restores instrumentation state, i.e. unstruments after the call only when the function was not instrumented before the call).
+
+Example call:
+
+```
+(with-instrumentation `foo (foo 1 2 3))
+```
+
+### `with-unstrumentation`
+Unstrument a function in the scope of a body. Restores instrumentation state, i.e. only re-instruments after the call when the function was instrumented before the call.
+
+Example call:
+
+```
+(with-unstrumentation `foo (foo 1 2 3))
+```
+
+### `throws`
+Asserts with `clojure.test/is` that body throws spec error for symbol.
+
+Example call:
+
+```
+(deftest my-spec-works
+  (with-instrumentation `foo
+    (throws `foo (foo :some-wrong-argument))))
+```
+
+### `check-call`
+Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn` specs. Returns return value of call if succeeded, else throws.
+
+Example call:
+
+```
+(check-call `foo [1 2 3])
+```
+
+### `check`
+Like `clojure.spec.test.alpha/check` with third arg for passing `clojure.test.check` options.
+
+Example call:
+
+```
+(check `foo {} {:num-tests 10})
+```
+
+### `successful?`
+Returns true if all `spec.test.alpha/check` tests have `pass?` `true`.
+
+Example call:
+
+```
+(successful? (check `foo {} {:num-tests 10}))
+```
 
 ## Example usage
 
 ``` clojure
-$ clj -Sdeps '{:deps {org.clojure/test.check {:mvn/version "RELEASE"}}}'
+$ clj -Sdeps '{:deps {respeced {:mvn/version "0.0.1-SNAPSHOT"}}}'
 Clojure 1.10.0-beta5
 
 user=> (require '[respeced.test :as test])
@@ -66,6 +131,10 @@ true
 
 user=>
 ```
+
+## Origin
+
+This library started as a namespace in [speculative](https://github.com/slipset/speculative/).
 
 ## Tests
 
