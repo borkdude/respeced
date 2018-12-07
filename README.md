@@ -4,7 +4,7 @@
 
 ## What is respeced?
 
-This library provides various functions and macros around `clojure.spec.test.alpha`. This library fully supports Clojure, ClojureScript and self-hosted ClojureScript. Typically this library is used in testing.
+This library provides various functions and macros around `clojure.spec.test.alpha`. This library fully supports Clojure, ClojureScript and self-hosted ClojureScript. Typically this library is used for verifying specs in testing.
 
 ## API
 
