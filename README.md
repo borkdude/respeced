@@ -2,9 +2,16 @@
 [![CircleCI](https://circleci.com/gh/borkdude/respeced/tree/master.svg?style=svg)](https://circleci.com/gh/borkdude/respeced/tree/master)
 [![Clojars Project](https://img.shields.io/clojars/v/respeced.svg)](https://clojars.org/respeced)
 
-## What is respeced?
+## Rationale
 
-This library provides various functions and macros around `clojure.spec.test.alpha`. This library fully supports Clojure, ClojureScript and self-hosted ClojureScript. Typically this library is used for verifying specs in testing.
+This library helps verify that [spec](https://clojure.org/about/spec) `fdefs` do what they are supposed to do:
+
+- throw errors on wrong input (when instrumented) and output (when used in generative testing) of functions
+- not throw on correct usage
+
+Typically this library is used in testing.
+
+This library fully supports Clojure, ClojureScript and self-hosted ClojureScript.
 
 ## API
 
