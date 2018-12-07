@@ -33,15 +33,15 @@ Example call:
 (with-unstrumentation `foo (foo 1 2 3))
 ```
 
-### `throws`
-Asserts with `clojure.test/is` that body throws spec error for symbol.
+### `caught?`
+Returns true if body throws spec error for instrumented fn.
 
 Example call:
 
 ```
 (deftest my-spec-works
   (with-instrumentation `foo
-    (throws `foo (foo :some-wrong-argument))))
+    (is (caught? `foo (foo :some-wrong-argument))))
 ```
 
 ### `check-call`
