@@ -39,7 +39,7 @@ Returns true if body throws spec error for instrumented fn.
 Example call:
 
 ```clojure
-(deftest my-spec-works
+(deftest my-fdef-works
   (with-instrumentation `foo
     (is (caught? `foo (foo :some-wrong-argument))))
 ```
