@@ -58,7 +58,7 @@ Like `clojure.spec.test.alpha/check` with third arg for passing `clojure.test.ch
 
 Example call:
 
-```
+```clojure
 (check `foo {} {:num-tests 10})
 ```
 
@@ -67,7 +67,7 @@ Returns true if all `spec.test.alpha/check` tests have `pass?` `true`.
 
 Example call:
 
-```
+```clojure
 (successful? (check `foo {} {:num-tests 10}))
 ```
 
