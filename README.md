@@ -39,7 +39,7 @@ Returns true if body throws spec error for instrumented fn.
 Example call:
 
 ```clojure
-(deftest my-spec-works
+(deftest my-fdef-works
   (with-instrumentation `foo
     (is (caught? `foo (foo :some-wrong-argument))))
 ```
@@ -50,7 +50,7 @@ Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn` sp
 Example call:
 
 ```clojure
-(check-call `foo [1 2 3])
+(is (= [4 5 6] (check-call `foo [1 2 3])))
 ```
 
 ### `check`
@@ -58,7 +58,7 @@ Like `clojure.spec.test.alpha/check` with third arg for passing `clojure.test.ch
 
 Example call:
 
-```
+```clojure
 (check `foo {} {:num-tests 10})
 ```
 
@@ -67,7 +67,7 @@ Returns true if all `spec.test.alpha/check` tests have `pass?` `true`.
 
 Example call:
 
-```
+```clojure
 (successful? (check `foo {} {:num-tests 10}))
 ```
 
@@ -77,7 +77,7 @@ Example call:
 $ clj -Sdeps '{:deps {respeced {:mvn/version "0.0.1-SNAPSHOT"}}}'
 Clojure 1.10.0-beta5
 
-user=> (require '[respeced.test :as test])
+user=> (require '[respeced.test :as rt])
 nil
 
 user=> (require '[clojure.spec.alpha :as s])
@@ -91,9 +91,9 @@ user/foo
 user=> (defn foo [n] "ret")
 #'user/foo
 
-;; test/check-call helps with checking `:ret` and `:fn` specs:
+;; rt/check-call helps with checking `:ret` and `:fn` specs:
 
-user=> (test/check-call `foo [1])
+user=> (rt/check-call `foo [1])
 Execution error - invalid arguments to respeced.test$do_check_call/invokeStatic at (test.cljc:138).
 "ret" - failed: number? at: [:ret]
 
@@ -104,12 +104,12 @@ user/foo
 
 ;; no error anymore:
 
-user=> (test/check-call `foo [1])
+user=> (rt/check-call `foo [1])
 "ret"
 
 ;; instrument a function within a scope:
 
-user=> (test/with-instrumentation `foo (foo "a"))
+user=> (rt/with-instrumentation `foo (foo "a"))
 Execution error - invalid arguments to user/foo at (REPL:1).
 "a" - failed: number? at: [:n]
 
@@ -118,15 +118,15 @@ Execution error - invalid arguments to user/foo at (REPL:1).
 user=> (foo "a")
 "ret"
 
-;; `test/check` has a third arg for passing `clojure.test.check` options:
+;; `rt/check` has a third arg for passing `clojure.test.check` options:
 
-user=> (test/check `foo nil {:num-tests 1})
+user=> (rt/check `foo nil {:num-tests 1})
 generatively testing user/foo
 ({:spec #object[clojure.spec.alpha$fspec_impl$reify__2524 0x72bd06ca "clojure.spec.alpha$fspec_impl$reify__2524@72bd06ca"], :clojure.spec.test.check/ret {:result true, :pass? true, :num-tests 1, :time-elapsed-ms 1, :seed 1541249961647}, :sym user/foo})
 
 ;; validate if generative test was successful:
 
-user=> (test/successful? *1)
+user=> (rt/successful? *1)
 true
 
 user=>
