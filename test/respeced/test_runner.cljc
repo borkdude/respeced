@@ -2,8 +2,11 @@
   (:require
    [clojure.test :as t :refer [run-tests]]
    [clojure.test]
-   [respeced.test :refer [planck-env?]]
    [respeced.test-test]))
+
+(defn planck-env? []
+  #?(:cljs (exists? js/PLANCK_EXIT_WITH_VALUE)
+     :clj false))
 
 (defn exit
   "Exit with the given status."

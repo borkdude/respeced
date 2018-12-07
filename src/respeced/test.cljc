@@ -123,10 +123,6 @@
   (keyword #?(:clj "clojure.spec.test.check"
               :cljs "clojure.test.check") name))
 
-(defn planck-env? []
-  #?(:cljs (exists? js/PLANCK_EXIT_WITH_VALUE)
-     :clj false))
-
 ;;;; Public API
 
 (deftime
@@ -176,7 +172,7 @@
                            (catch js/Error e#
                              (.-message e#))))]
        (clojure.string/starts-with?
-        msg#
+        (str msg#)
         (str "Call to " (resolve ~sym)
              " did not conform to spec"))))
 
