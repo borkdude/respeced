@@ -20,7 +20,7 @@ Instrument a function in the scope of a body. Restores instrumentation state, i.
 
 Example call:
 
-```
+```clojure
 (with-instrumentation `foo (foo 1 2 3))
 ```
 
@@ -29,7 +29,7 @@ Unstrument a function in the scope of a body. Restores instrumentation state, i.
 
 Example call:
 
-```
+```clojure
 (with-unstrumentation `foo (foo 1 2 3))
 ```
 
@@ -38,7 +38,7 @@ Returns true if body throws spec error for instrumented fn.
 
 Example call:
 
-```
+```clojure
 (deftest my-spec-works
   (with-instrumentation `foo
     (is (caught? `foo (foo :some-wrong-argument))))
@@ -49,7 +49,7 @@ Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn` sp
 
 Example call:
 
-```
+```clojure
 (check-call `foo [1 2 3])
 ```
 
