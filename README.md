@@ -50,7 +50,7 @@ Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn` sp
 Example call:
 
 ```clojure
-(check-call `foo [1 2 3])
+(is (= [4 5 6] (check-call `foo [1 2 3])))
 ```
 
 ### `check`
