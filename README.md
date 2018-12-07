@@ -9,9 +9,9 @@ This library helps verify that [spec](https://clojure.org/about/spec) `fdefs` do
 - throw errors on wrong input (when instrumented) and output (when used in generative testing) of functions
 - not throw on correct usage
 
-Typically this library is used in testing.
+Typically respeced is used in testing.
 
-This library fully supports Clojure, ClojureScript and self-hosted ClojureScript.
+Respeced fully supports Clojure, ClojureScript and self-hosted ClojureScript.
 
 ## API
 
