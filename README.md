@@ -1,6 +1,7 @@
 # respeced
 [![CircleCI](https://circleci.com/gh/borkdude/respeced/tree/master.svg?style=svg)](https://circleci.com/gh/borkdude/respeced/tree/master)
 [![Clojars Project](https://img.shields.io/clojars/v/respeced.svg)](https://clojars.org/respeced)
+[![cljdoc badge](https://cljdoc.org/badge/respeced/respeced)](https://cljdoc.org/d/respeced/respeced/CURRENT)
 
 ## Rationale
 
