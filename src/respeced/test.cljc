@@ -65,9 +65,9 @@
              " did not conform to spec"))))
 
   (defmacro check-call
-    "Applies args to function resolved by symbol. Checks :args, :ret
-  and :fn specs for spec resolved by symbol. Returns return value if check
-  succeeded, else throws."
+    "Applies args to function resolved by symbol. Checks `:args`, `:ret`
+  and `:fn` specs for spec resolved by symbol. Returns return value if
+  check succeeded, else throws."
     [symbol args]
     (assert (vector? args))
     `(let [f# (resolve ~symbol)
@@ -75,7 +75,8 @@
        (impl/check-call* f# spec# ~args)))
 
   (defmacro check
-    "spec.test/check with third arg for passing clojure.test.check options."
+    "`clojure.spec.test.alpha/check` with third arg for passing
+  `clojure.test.check` options."
     ([sym]
      `(check ~sym nil nil))
     ([sym opts]
@@ -93,7 +94,8 @@
           ret#)))))
 
 (defn successful?
-  "Returns true if all spec.test.alpha/check tests have pass? true."
+  "Returns `true` if all `clojure.spec.test.alpha/check` tests have
+  `pass?` `true.`"
   [stc-result]
   (and (seq stc-result)
        (every? (fn [res]
