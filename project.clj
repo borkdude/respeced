@@ -5,7 +5,7 @@
         :url "https://github.com/borkdude/respeced"}
   :license {:name "MIT"
             :url "https://mit-license.org/"}
-  :dependencies [[org.clojure/clojure "1.10.0-RC3"]]
+  :dependencies [[org.clojure/clojure "1.10.0-RC4"]]
   :profiles {:dev {:dependencies
                    [[org.clojure/clojurescript "1.10.439"]
                     [org.clojure/test.check "0.9.0"]]}}

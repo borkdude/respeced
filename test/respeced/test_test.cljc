@@ -3,13 +3,13 @@
    [clojure.spec.alpha :as s]
    [clojure.spec.test.alpha :as stest]
    [clojure.test :as t :refer [deftest is testing]]
+   [respeced.impl :as impl]
    [respeced.test :refer [with-instrumentation
                           with-unstrumentation
                           caught?
                           check-call
                           check
-                          successful?
-                          test-check-kw]]
+                          successful?]]
    ;; included for self-hosted cljs
    [workarounds-1-10-439.core]))
 
@@ -66,11 +66,11 @@
     :ret string?)
   (testing "successful?"
     (is (not (successful? [])))
-    (is (successful? [{(test-check-kw "ret") {:pass? true}}]))
-    (is (not (successful? [{(test-check-kw "ret") {:pass? false}}]))))
+    (is (successful? [{(impl/test-check-kw "ret") {:pass? true}}]))
+    (is (not (successful? [{(impl/test-check-kw "ret") {:pass? false}}]))))
   (testing "check"
     (let [ret (check `foo nil {:num-tests 42})
-          rets (map (test-check-kw "ret") ret)]
+          rets (map (impl/test-check-kw "ret") ret)]
       (is (successful? ret))
       (is (every? #(= 42 (:num-tests %)) rets)))))
 
