@@ -18,7 +18,9 @@
   ;; with-(i/u)nstrumentation avoids using finally as a workaround for
   ;; https://dev.clojure.org/jira/browse/CLJS-2949
   (defmacro with-instrumentation
-    "Executes body while instrumenting symbol."
+    "Instrument a function in the scope of a body. Restores instrumentation state,
+  i.e. unstruments after the call only when the function was not
+  instrumented before the call)."
     [symbol & body]
     `(let [was-instrumented?#
            (boolean
@@ -33,7 +35,9 @@
          ret#)))
 
   (defmacro with-unstrumentation
-    "Executes body while unstrumenting symbol."
+    "Unstrument a function in the scope of a body. Restores instrumentation state,
+  i.e. only re-instruments after the call when the function was
+  instrumented before the call."
     [symbol & body]
     `(let [was-instrumented?#
            (boolean
@@ -48,7 +52,7 @@
          ret#)))
 
   (defmacro caught?
-    "Returns true if body throws spec error for instrumented fn"
+    "Returns `true` if body throws spec error for instrumented fn."
     [sym & body]
     `(let [msg#
            (impl/? :clj (try
@@ -66,8 +70,8 @@
 
   (defmacro check-call
     "Applies args to function resolved by symbol. Checks `:args`, `:ret`
-  and `:fn` specs for spec resolved by symbol. Returns return value if
-  check succeeded, else throws."
+  and `:fn` specs. Returns return value of call if succeeded, else
+  throws."
     [symbol args]
     (assert (vector? args))
     `(let [f# (resolve ~symbol)
@@ -75,7 +79,7 @@
        (impl/check-call* f# spec# ~args)))
 
   (defmacro check
-    "`clojure.spec.test.alpha/check` with third arg for passing
+    "Like `clojure.spec.test.alpha/check` with third arg for passing
   `clojure.test.check` options."
     ([sym]
      `(check ~sym nil nil))

@@ -5,19 +5,39 @@
 
 ## Rationale
 
-This library helps verify that [spec](https://clojure.org/about/spec) `fdefs` do what they are supposed to do:
+This library helps verify that [spec](https://clojure.org/about/spec) `fdefs` do
+what they are supposed to do:
 
-- throw errors on wrong input (when instrumented) and output (when used in generative testing) of functions
-- not throw on correct usage
+- throw errors on non-valid arguments and return values
+- not throw on valid arguments and return values
 
-Typically respeced is used in testing.
+A good illustration of the intended usage of this library can be seen in tests
+for the
+[speculative](https://github.com/slipset/speculative/blob/master/test/speculative/core_test.cljc)
+library, where this library originated from.
 
 Respeced fully supports Clojure, ClojureScript and self-hosted ClojureScript.
+
+## Installation
+
+### tools.deps.alpha
+
+```
+respeced {:mvn/version "0.0.1"}
+```
+
+### leiningen
+
+```
+[respeced "0.0.1"]
+```
 
 ## API
 
 ### `with-instrumentation`
-Instrument a function in the scope of a body. Restores instrumentation state, i.e. unstruments after the call only when the function was not instrumented before the call).
+Instrument a function in the scope of a body. Restores instrumentation state,
+i.e. unstruments after the call only when the function was not instrumented
+before the call).
 
 Example call:
 
@@ -26,7 +46,9 @@ Example call:
 ```
 
 ### `with-unstrumentation`
-Unstrument a function in the scope of a body. Restores instrumentation state, i.e. only re-instruments after the call when the function was instrumented before the call.
+Unstrument a function in the scope of a body. Restores instrumentation state,
+i.e. only re-instruments after the call when the function was instrumented
+before the call.
 
 Example call:
 
@@ -35,7 +57,7 @@ Example call:
 ```
 
 ### `caught?`
-Returns true if body throws spec error for instrumented fn.
+Returns `true` if body throws spec error for instrumented fn.
 
 Example call:
 
@@ -46,7 +68,8 @@ Example call:
 ```
 
 ### `check-call`
-Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn` specs. Returns return value of call if succeeded, else throws.
+Applies args to function resolved by symbol. Checks `:args`, `:ret` and `:fn`
+specs. Returns return value of call if succeeded, else throws.
 
 Example call:
 
@@ -55,7 +78,8 @@ Example call:
 ```
 
 ### `check`
-Like `clojure.spec.test.alpha/check` with third arg for passing `clojure.test.check` options.
+Like `clojure.spec.test.alpha/check` with third arg for passing
+`clojure.test.check` options.
 
 Example call:
 
@@ -64,7 +88,7 @@ Example call:
 ```
 
 ### `successful?`
-Returns true if all `spec.test.alpha/check` tests have `pass?` `true`.
+Returns `true` if all `clojure.spec.test.alpha/check` tests have `pass?` `true`.
 
 Example call:
 
@@ -75,8 +99,8 @@ Example call:
 ## Example usage
 
 ``` clojure
-$ clj -Sdeps '{:deps {respeced {:mvn/version "0.0.1-SNAPSHOT"}}}'
-Clojure 1.10.0-beta5
+$ clj -Sdeps '{:deps {respeced {:mvn/version "0.0.1"}}}'
+Clojure 1.10
 
 user=> (require '[respeced.test :as rt])
 nil
@@ -132,11 +156,6 @@ true
 
 user=>
 ```
-
-## Origin
-
-This library started as a namespace in
-[speculative](https://github.com/slipset/speculative/).
 
 ## Tests
 
