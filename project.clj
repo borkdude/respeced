@@ -1,4 +1,4 @@
-(defproject respeced "0.0.1"
+(defproject respeced "0.0.2-SNAPSHOT"
   :description "You wrote fdefs. But how are you going to test them?"
   :url "https://github.com/borkdude/respeced"
   :scm {:name "git"
