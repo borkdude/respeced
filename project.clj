@@ -1,11 +1,11 @@
-(defproject respeced "0.0.1-SNAPSHOT"
-  :description "Various tools around clojure.spec.test.alpha"
+(defproject respeced "0.0.1"
+  :description "You wrote fdefs. But how are you going to test them?"
   :url "https://github.com/borkdude/respeced"
   :scm {:name "git"
         :url "https://github.com/borkdude/respeced"}
   :license {:name "MIT"
             :url "https://mit-license.org/"}
-  :dependencies [[org.clojure/clojure "1.10.0-RC4"]]
+  :dependencies [[org.clojure/clojure "1.10.0"]]
   :profiles {:dev {:dependencies
                    [[org.clojure/clojurescript "1.10.439"]
                     [org.clojure/test.check "0.9.0"]]}}
