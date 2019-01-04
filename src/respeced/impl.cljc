@@ -1,7 +1,10 @@
 (ns ^:no-doc respeced.impl
   (:require
    [clojure.spec.alpha :as s]
-   [clojure.spec.test.alpha :as stest])
+   [clojure.spec.test.alpha :as stest]
+   #?(:cljs [goog.string])
+   [clojure.test.check]
+   [clojure.test.check.properties])
   #?(:cljs
      (:require-macros
       [respeced.impl :refer [deftime ?
@@ -119,4 +122,9 @@
   clojure.test.check"
   [name]
   (keyword #?(:clj "clojure.spec.test.check"
-              :cljs "clojure.test.check") name))
+              :cljs
+              (if (and *clojurescript-version*
+                       (pos? (goog.string/compareVersions "1.10.539"
+                                                          *clojurescript-version*)))
+                "clojure.test.check"
+                "clojure.spec.test.check")) name))

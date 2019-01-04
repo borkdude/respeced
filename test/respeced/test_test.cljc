@@ -9,9 +9,7 @@
                           caught?
                           check-call
                           check
-                          successful?]]
-   ;; included for self-hosted cljs
-   [workarounds-1-10-439.core]))
+                          successful?]]))
 
 (defn foo [n]
   "ret")
