@@ -1,7 +1,9 @@
 (ns ^:no-doc respeced.impl
   (:require
-   [clojure.spec.alpha :as s]
-   [clojure.spec.test.alpha :as stest]
+   #?(:clj [clojure.spec-alpha2 :as s]
+      :cljs [clojure.spec.alpha :as s])
+   #?(:clj [clojure.spec-alpha2.test :as stest]
+      :cljs [clojure.spec.test.alpha :as stest])
    #?(:cljs [goog.string])
    [clojure.test.check]
    [clojure.test.check.properties])
@@ -40,7 +42,7 @@
     "Private."
     [& body]
     `(? :clj
-        (clojure.spec.test.alpha/with-instrument-disabled ~@body)
+        (clojure.spec-alpha2.test/with-instrument-disabled ~@body)
         :cljs
         (cljs.spec.test.alpha/with-instrument-disabled ~@body)))
 
@@ -48,7 +50,7 @@
     "Private."
     [symbol]
     `(? :clj
-        (clojure.spec.test.alpha/instrument ~symbol)
+        (clojure.spec-alpha2.test/instrument ~symbol)
         :cljs
         (cljs.spec.test.alpha/instrument ~symbol)))
 
@@ -56,7 +58,7 @@
     "Private."
     [symbol]
     `(? :clj
-        (clojure.spec.test.alpha/unstrument ~symbol)
+        (clojure.spec-alpha2.test/unstrument ~symbol)
         :cljs
         (cljs.spec.test.alpha/unstrument ~symbol)))
 
@@ -64,7 +66,7 @@
     "Private."
     [symbol]
     `(? :clj
-        (clojure.spec.alpha/get-spec ~symbol)
+        (clojure.spec-alpha2/get-spec ~symbol)
         :cljs
         (cljs.spec.alpha/get-spec ~symbol)))
 
@@ -72,7 +74,7 @@
     "Private."
     [symbol opts]
     `(? :clj
-        (clojure.spec.test.alpha/check ~symbol ~opts)
+        (clojure.spec-alpha2.test/check ~symbol ~opts)
         :cljs
         (cljs.spec.test.alpha/check ~symbol ~opts))))
 
@@ -91,21 +93,46 @@
           (catch ~(? :clj 'Exception :cljs ':default) e#
             e#))))
 
+#_(defn- check-call
+  "Returns true if call passes specs, otherwise *returns* an exception
+with explain-data + ::s/failure."
+  [f specs args]
+  (let [cargs (when (:args specs) (s/conform (:args specs) args))]
+    (if (= cargs ::s/invalid)
+      (explain-check args (:args specs) args :args)
+      (let [ret (apply f args)
+            cret (when (:ret specs) (s/conform (:ret specs) ret))]
+        (if (= cret ::s/invalid)
+          (explain-check args (:ret specs) ret :ret)
+          (if (and (:args specs) (:ret specs) (:fn specs))
+            (if (s/valid? (:fn specs) {:args cargs :ret cret})
+              true
+              (explain-check args (:fn specs) {:args cargs :ret cret} :fn))
+            true))))))
+
+(def ^:private explain-check
+  #?(:clj #'clojure.spec-alpha2.test/explain-check
+     :cljs #'clojure.spec.test.alpha/explain-check))
+
+(def ^:private valid?
+  #?(:clj #'clojure.spec-alpha2/valid?
+     :cljs #'clojure.spec.alpha/valid?))
+
 (defn do-check-call
   "Private. From clojure.spec.test.alpha, adapted for respeced"
   [f specs args]
-  (clojure.spec.test.alpha/with-instrument-disabled
+  (with-instrument-disabled
     (let [cargs (when (:args specs) (s/conform (:args specs) args))]
       (if (= cargs ::s/invalid)
-        (#'clojure.spec.test.alpha/explain-check args (:args specs) args :args)
+        (explain-check args (:args specs) args :args)
         (let [ret (apply f args)
               cret (when (:ret specs) (s/conform (:ret specs) ret))]
           (if (= cret ::s/invalid)
-            (#'clojure.spec.test.alpha/explain-check args (:ret specs) ret :ret)
+            (explain-check args (:ret specs) ret :ret)
             (if (and (:args specs) (:ret specs) (:fn specs))
-              (if (clojure.spec.alpha/valid? (:fn specs) {:args cargs :ret cret})
+              (if (valid? (:fn specs) {:args cargs :ret cret})
                 ret
-                (#'clojure.spec.test.alpha/explain-check args (:fn specs) {:args cargs :ret cret} :fn))
+                (explain-check args (:fn specs) {:args cargs :ret cret} :fn))
               ret)))))))
 
 (defn check-call*
