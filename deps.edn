@@ -3,9 +3,7 @@
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps {org.clojure/clojure {:mvn/version "1.10.0"}
-                      org.clojure/clojurescript #_{:mvn/version "1.10.439"}
-                      {:git/url "https://github.com/clojure/clojurescript"
-                       :sha "950032dba300451835c4c7c2a0c1c74ca6d0b49a"}
+                      org.clojure/clojurescript {:mvn/version "1.10.520"}
                       org.clojure/test.check {:mvn/version "RELEASE"}}}
   :clj-tests ;; we use a script, because then we can call shutdown-agents, which
   ;; brings down the process faster after running generative tests
