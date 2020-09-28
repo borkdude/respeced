@@ -3,8 +3,8 @@
   :url "https://github.com/borkdude/respeced"
   :scm {:name "git"
         :url "https://github.com/borkdude/respeced"}
-  :license {:name "MIT"
-            :url "https://mit-license.org/"}
+  :license {:name "Eclipse Public License 1.0"
+            :url "http://opensource.org/licenses/eclipse-1.0.php"}
   :dependencies [[org.clojure/clojure "1.10.0"]]
   :profiles {:dev {:dependencies
                    [[org.clojure/clojurescript "1.10.439"]
