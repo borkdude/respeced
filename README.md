@@ -37,7 +37,7 @@ respeced {:mvn/version "0.0.1"}
 ### `with-instrumentation`
 Instrument a function in the scope of a body. Restores instrumentation state,
 i.e. unstruments after the call only when the function was not instrumented
-before the call).
+before the call.
 
 Example call:
 
