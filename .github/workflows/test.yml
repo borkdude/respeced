@@ -1,0 +1,46 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test-:
+    # Runs tests accross given OSs and JDKs
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        jdk: [8]
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare java ${{ matrix.jdk }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.jdk }}
+
+      - name: Install Clojure Tools
+        uses: DeLaGuardo/setup-clojure@9.5
+        with:
+          cli: '1.10.3.1013'
+
+      - name: Cache clojure dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+          key: cljdeps-${{ hashFiles('deps.edn', 'project.clj') }}
+          restore-keys: cljdeps-
+
+      - name: Run clj tests 1.10
+        run: clojure -M:test:clj-1.10:clj-test-runner
+      - name: Run clj tests 1.11
+        run: clojure -M:test:clj-1.11:clj-test-runner
+
+      - name: Run cljs tests 1.10
+        run: clojure -M:test:clj-1.10:cljs-test-runner
+      - name: Run cljs tests 1.11
+        run: clojure -M:test:clj-1.11:cljs-test-runner

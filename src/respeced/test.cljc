@@ -55,18 +55,22 @@
     "Returns `true` if body throws spec error for instrumented fn."
     [sym & body]
     `(let [msg#
-           (impl/? :clj (try
-                          ~@body
-                          (catch clojure.lang.ExceptionInfo e#
-                            (.getMessage e#)))
-                   :cljs (try
-                           ~@body
-                           (catch js/Error e#
-                             (.-message e#))))]
-       (clojure.string/starts-with?
-        (str msg#)
-        (str "Call to " (resolve ~sym)
-             " did not conform to spec"))))
+           (str (impl/? :clj (try
+                               ~@body
+                               (catch clojure.lang.ExceptionInfo e#
+                                 (.getMessage e#)))
+                        :cljs (try
+                                ~@body
+                                (catch js/Error e#
+                                  (.-message e#)))))]
+       ;; Try to match the FQ symbol against the exception's text
+       ;; message. In spec versions bundled with Clojure up to 1.10,
+       ;; the FQ symbol appears as a var (i.e. starts with #').
+       ;;
+       ;; Avoid having to write a cross clj[s] pattern for the
+       ;; optional `#'` by using starts/ends-with.
+       (clojure.string/starts-with? msg# "Call to ")
+       (clojure.string/ends-with? msg# (str (symbol (resolve ~sym)) " did not conform to spec."))))
 
   (defmacro check-call
     "Applies args to function resolved by symbol. Checks `:args`, `:ret`
