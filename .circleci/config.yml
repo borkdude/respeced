@@ -7,12 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/clojure:openjdk-11-lein-2.9.8-bullseye-node
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
+      - image: cimg/clojure:1.10.3-node
 
     working_directory: ~/repo
 
@@ -24,11 +19,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Clojure
+          name: Install babashka
           command: |
-            curl -LO https://download.clojure.org/install/linux-install-1.10.0.411.sh
-            chmod +x linux-install-1.10.0.411.sh
-            sudo ./linux-install-1.10.0.411.sh
+            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install) --dir ~
+            sudo mv ~/bb /usr/local/bin/bb
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -37,8 +31,8 @@ jobs:
           - v1-dependencies-
 
       # run tests!
-      - run: script/clean
-      - run: script/test
+      - run: bb test :1.10
+      - run: bb test :1.11
 
       - save_cache:
           paths:
