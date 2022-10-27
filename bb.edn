@@ -24,13 +24,9 @@
   cljs-tests {:doc "Run cljs tests; args: [deps-clj-version-alias]."
               :task (tasks/cljs-test (get-deps-clj-ver-alias))}
 
-  plk-tests {:doc "Run cljs Planck tests; args: [deps-clj-version-alias]."
-             :task (tasks/plk-test (get-deps-clj-ver-alias))}
-
-  test  {:doc "Run all tests; args [deps-clj-version-alias]."
+  test  {:doc "Run all tests; args: [deps-clj-version-alias]."
          :depends [clean]
          :task (let [deps-clj-ver-alias (get-deps-clj-ver-alias)]
                  (tasks/clj-test  deps-clj-ver-alias)
-                 (tasks/cljs-test deps-clj-ver-alias)
-                 (tasks/plk-test  deps-clj-ver-alias))}}}
+                 (tasks/cljs-test deps-clj-ver-alias))}}}
 

@@ -23,12 +23,6 @@ jobs:
           command: |
             bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install) --dir ~
             sudo mv ~/bb /usr/local/bin/bb
-      - run:
-          name: Install Planck
-          command: |
-            sudo add-apt-repository ppa:mfikes/planck
-            sudo apt-get update
-            sudo apt-get install planck
       # Download and cache dependencies
       - restore_cache:
           keys:

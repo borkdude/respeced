@@ -69,8 +69,8 @@
        ;;
        ;; Avoid having to write a cross clj[s] pattern for the
        ;; optional `#'` by using starts/ends-with.
-       (clojure.string/starts-with? msg# "Call to ")
-       (clojure.string/ends-with? msg# (str (symbol (resolve ~sym)) " did not conform to spec."))))
+       (and (clojure.string/starts-with? msg# "Call to ")
+            (clojure.string/ends-with? msg# (str (symbol (resolve ~sym)) " did not conform to spec.")))))
 
   (defmacro check-call
     "Applies args to function resolved by symbol. Checks `:args`, `:ret`
