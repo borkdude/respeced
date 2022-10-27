@@ -1,10 +1,13 @@
 {:paths ["resources" "src"]
- :deps {}
  :aliases
- {:clj-1.11 {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}
+ {
+  ;; Available clojure(script) versions to use during testing. Please include one of
+  ;; these when invoking the tests (e.g. -A:test:1.11:clj-tests).
+  :1.11 {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}
                           org.clojure/clojurescript {:mvn/version "1.11.60"}}}
-  :clj-1.10 {:extra-deps {org.clojure/clojure {:mvn/version "1.10.0"}
+  :1.10 {:extra-deps {org.clojure/clojure {:mvn/version "1.10.0"}
                           org.clojure/clojurescript {:mvn/version "1.10.520"}}}
+
   :test {:extra-paths ["test"]
          :extra-deps {org.clojure/test.check {:mvn/version "RELEASE"}}}
   :clj-tests ;; we use a script, because then we can call shutdown-agents, which
@@ -19,7 +22,7 @@
   :cljs-tests
   {:main-opts ["-m" "cljs.main" "-re" "node" "-m" "respeced.test-runner"]}
   :compile-node-tests
-  {:main-opts ["-m" "cljs.main" "-t" "node" "-c" "respeced.test-runner"]}
+  {:main-opts ["-m" "cljs.main" "-t" "node" "-d" "out" "-c" "respeced.test-runner"]}
   ;; we use the test runner because vanilla cljs.main + node doesn't exit
   ;; properly
   :cljs-test-runner

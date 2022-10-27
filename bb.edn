@@ -1,0 +1,36 @@
+{:paths ["bb"]
+ :tasks
+ {:requires [[babashka.deps :as deps]
+             [babashka.fs :as fs]
+             [babashka.process :as p]
+             [clojure.string :as str]
+             [tasks]]
+  :init (defn get-deps-clj-ver-alias
+          "Returns the the first command line argument, which is presumambly a
+  deps alias specifying the clojure(script) version to use during
+  testing (defaults to :1.11)."
+          []
+          (or (first *command-line-args*) :1.11))
+
+  clean {:doc "Clean testing artifacts."
+         :task (doseq [dir ["cljs-test-runner-out"
+                            "nashorn_code_cache"
+                            "out"]]
+                 (fs/delete-tree dir))}
+
+  clj-tests {:doc "Run clj tests; args: [deps-clj-version-alias]."
+             :task (tasks/clj-test (get-deps-clj-ver-alias))}
+
+  cljs-tests {:doc "Run cljs tests; args: [deps-clj-version-alias]."
+              :task (tasks/cljs-test (get-deps-clj-ver-alias))}
+
+  plk-tests {:doc "Run cljs Planck tests; args: [deps-clj-version-alias]."
+             :task (tasks/plk-test (get-deps-clj-ver-alias))}
+
+  test  {:doc "Run all tests; args [deps-clj-version-alias]."
+         :depends [clean]
+         :task (let [deps-clj-ver-alias (get-deps-clj-ver-alias)]
+                 (tasks/clj-test  deps-clj-ver-alias)
+                 (tasks/cljs-test deps-clj-ver-alias)
+                 (tasks/plk-test  deps-clj-ver-alias))}}}
+
