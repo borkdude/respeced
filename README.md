@@ -3,6 +3,8 @@
 [![Clojars Project](https://img.shields.io/clojars/v/respeced.svg)](https://clojars.org/respeced)
 [![cljdoc badge](https://cljdoc.org/badge/respeced/respeced)](https://cljdoc.org/d/respeced/respeced/CURRENT)
 
+Testing library for clojure.spec fdefs.
+
 ## Rationale
 
 This library helps verify that [spec](https://clojure.org/about/spec) `fdefs` do
