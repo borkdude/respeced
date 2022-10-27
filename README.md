@@ -22,16 +22,16 @@ Respeced fully supports Clojure, ClojureScript and self-hosted ClojureScript.
 
 ## Installation
 
-### tools.deps.alpha
+### deps.edn
 
 ```
-respeced {:mvn/version "0.0.1"}
+respeced/respeced {:mvn/version "0.1.2"}
 ```
 
 ### leiningen
 
 ```
-[respeced "0.0.1"]
+[respeced "0.1.2"]
 ```
 
 ## API
@@ -101,7 +101,7 @@ Example call:
 ## Example usage
 
 ``` clojure
-$ clj -Sdeps '{:deps {respeced {:mvn/version "0.0.1"}}}'
+$ clj -Sdeps '{:deps {respeced/respeced {:mvn/version "0.1.2"}}}'
 Clojure 1.10
 
 user=> (require '[respeced.test :as rt])
