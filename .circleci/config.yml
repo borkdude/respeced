@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/clojure:openjdk-11-lein-2.9.8-bullseye
+      - image: circleci/clojure:openjdk-11-lein-2.9.8-bullseye-node
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -29,17 +29,6 @@ jobs:
             curl -LO https://download.clojure.org/install/linux-install-1.10.0.411.sh
             chmod +x linux-install-1.10.0.411.sh
             sudo ./linux-install-1.10.0.411.sh
-      - run:
-          name: Install Planck
-          command: |
-            sudo apt-get update
-            sudo apt-get install javascriptcoregtk-4.0 libzip4
-            curl -LO http://planck-repl.org/releases/2.20.0-debian-9.0/planck
-            curl -LO http://planck-repl.org/releases/2.20.0-debian-9.0/plk
-            chmod +x planck
-            chmod +x plk
-            sudo mv planck /usr/bin
-            sudo mv plk /usr/bin
       # Download and cache dependencies
       - restore_cache:
           keys:

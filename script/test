@@ -12,11 +12,3 @@ script/cljs-tests
 if [ $? != 0 ]; then
     exit_code=1
 fi
-
-echo "\n=== Running plk-tests"
-plk -A:test:plk-tests
-if [ $? != 0 ]; then
-    exit_code=1
-fi
-
-exit $exit_code
