@@ -161,20 +161,27 @@ user=>
 
 ## Tests
 
+Requires [babashka](https://github.com/babashka/babashka#installation).
+
+The tests can be called with an optional `deps.edn` alias argument to
+specify the Clojure(Script) version to load, e.g.
+
+`bb clj-tests :1.10`
+
+### All tests
+
+`bb test`
+
 ### Clojure
 
-    clj -A:test:clj-tests
+`bb clj-tests`
      
 ### ClojureScript
 
-    script/cljs-tests
+`bb cljs-tests`
     
-### Self-Hosted ClojureScript
-   
-    plk -A:test:plk-tests
-
 ## License
 
-Copyright © 2018 Michiel Borkent
+Copyright © 2018-2022 Michiel Borkent
 
 Distributed under the EPL License, same as Clojure. See LICENSE.
